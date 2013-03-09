@@ -210,6 +210,7 @@ public class PythonActivity extends Activity implements Runnable {
 
     public void run() {
 
+    	// TODO make sure this applies if not using kivy
         unpackData("private", getFilesDir());
         unpackData("public", externalStorage);
 
@@ -220,6 +221,9 @@ public class PythonActivity extends Activity implements Runnable {
 		System.loadLibrary("python2.7");
         System.loadLibrary("application");
         System.loadLibrary("sdl_main");
+        
+        // FIXME why isn't this "swift?" double check this is how to init the lib against raul's code
+        System.loadLibrary("event");
 
 		System.load(getFilesDir() + "/lib/python2.7/lib-dynload/_io.so");
         System.load(getFilesDir() + "/lib/python2.7/lib-dynload/unicodedata.so");
