@@ -10,7 +10,15 @@ From within the resulting dist/default/ (the core of this repo), execute:
 
 	./build-apk.sh
 
-to build an apk in bin/ such as AndroidTGS-0.1-debug.apk .You can install this onto a device using:
+after merging
+
+	https://github.com/rauljim/tgs-android
+
+and
+
+	https://github.com/whirm/tgs-pc
+
+to build an apk in bin/ such as AndroidTGS-0.1-debug.apk. You can install this onto a device using:
 
 	adb install bin/AndroidTGS-0.1-debug.apk
 
