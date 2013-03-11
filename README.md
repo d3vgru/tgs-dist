@@ -1,6 +1,6 @@
 This archive was built starting with:
 
-	./distribute.sh -m "sdl m2crypto netifaces libswift"
+	./distribute-tgs.sh
 
 using
 
