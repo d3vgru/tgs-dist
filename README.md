@@ -28,7 +28,7 @@ and
 
 	https://github.com/whirm/tgs-pc
 
-and adding the native Android UI and Java<->Python bindings. Also, the Python side became a magical unicorn.
+and adding the native Android UI and Java<->Python bindings. Also, the Python side was implemented as a service so a native Android UI could be employed. Probably.
 
 Currently, .egg files produced by setuptools are unsupported, so they need to be manually extracted in the same directory, ie private/lib/python2.7/site-packages -- mainly for m2crypto and netifaces. For m2crypto, the M2Crypto dir needs to be moved to site-packages or ssl_dispatcher error if you
 
