@@ -19,3 +19,7 @@ or:
 	adb install -r bin/AndroidTGS-0.1-debug.apk
 
 to reinstall.
+
+Currently, .egg files produced by setuptools are unsupported, so they need to be manually extracted in the same directory, ie private/lib/python2.7/site-packages -- mainly for m2crypto and netifaces. For m2crypto, the M2Crypto dir needs to be moved to site-packages or ssl_dispatcher error if you
+
+	import M2Crypto
