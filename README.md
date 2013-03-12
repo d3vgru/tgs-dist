@@ -26,9 +26,13 @@ The dist/default dir from the first step was modified by manually merging
 
 and
 
+	https://github.com/d3vgru/tgs-android
+
+and
+
 	https://github.com/whirm/tgs-pc
 
-and adding a native Android layer in src/org/theglobalsquare/app and Java<->Python bindings in *bindings dir here*. Also, the Python side was implemented as a service so the native Android UI could be employed. Probably.
+and adding a native Android layer in src/org/theglobalsquare/app and Java<->Python bindings in *bindings dirs here*. Also, the Python side was implemented as a service so the native Android UI could be employed. Probably. And based on whirm's original tgs-android.
 
 Currently, .egg files produced by setuptools are unsupported, so they need to be manually extracted in the same directory, ie private/lib/python2.7/site-packages -- mainly for m2crypto and netifaces. For m2crypto, the M2Crypto dir needs to be moved to site-packages or ssl_dispatcher error if you
 
