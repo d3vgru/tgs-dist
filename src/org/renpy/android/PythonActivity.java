@@ -32,13 +32,15 @@ import java.io.IOException;
 
 import java.util.zip.GZIPInputStream;
 
+import org.theglobalsquare.app.PythonService;
+
 public class PythonActivity extends Activity implements Runnable {
 
     // The audio thread for streaming audio...
     private static AudioThread mAudioThread = null;
 
     // The SDLSurfaceView we contain.
-    public static SDLSurfaceView mView = null;
+    public static PythonService mView = null;
 	public static PythonActivity mActivity = null;
 
     // Did we launch our thread?
@@ -60,7 +62,6 @@ public class PythonActivity extends Activity implements Runnable {
 
         Hardware.context = this;
         Action.context = this;
-		this.mActivity = this;
 
         getWindowManager().getDefaultDisplay().getMetrics(Hardware.metrics);
 
@@ -109,13 +110,15 @@ public class PythonActivity extends Activity implements Runnable {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        /*
         // Start showing an SDLSurfaceView.
-        mView = new SDLSurfaceView(
+        mView = new PythonService(
             this,
             mPath.getAbsolutePath());
 
         Hardware.view = mView;
         setContentView(mView);
+        */
     }
 
     /**
@@ -208,9 +211,8 @@ public class PythonActivity extends Activity implements Runnable {
 
     }
 
+	// TODO make sure this applies if not using kivy
     public void run() {
-
-    	// TODO make sure this applies if not using kivy
         unpackData("private", getFilesDir());
         unpackData("public", externalStorage);
 
@@ -282,10 +284,11 @@ public class PythonActivity extends Activity implements Runnable {
         return _isPaused;
     }
 
+    /* might need this back later?
     @Override
     public boolean onKeyDown(int keyCode, final KeyEvent event) {
         //Log.i("python", "key2 " + mView + " " + mView.mStarted);
-        if (mView != null && mView.mStarted && SDLSurfaceView.nativeKey(keyCode, 1, event.getUnicodeChar())) {
+        if (mView != null && mView.mStarted && PythonService.nativeKey(keyCode, 1, event.getUnicodeChar())) {
             return true;
         } else {
             return super.onKeyDown(keyCode, event);
@@ -295,7 +298,7 @@ public class PythonActivity extends Activity implements Runnable {
     @Override
     public boolean onKeyUp(int keyCode, final KeyEvent event) {
         //Log.i("python", "key up " + mView + " " + mView.mStarted);
-        if (mView != null && mView.mStarted && SDLSurfaceView.nativeKey(keyCode, 0, event.getUnicodeChar())) {
+        if (mView != null && mView.mStarted && PythonService.nativeKey(keyCode, 0, event.getUnicodeChar())) {
             return true;
         } else {
             return super.onKeyUp(keyCode, event);
@@ -312,6 +315,7 @@ public class PythonActivity extends Activity implements Runnable {
             return super.dispatchTouchEvent(ev);
         }
     }
+    */
 
 	protected void onDestroy() {
 		if (mView != null) {

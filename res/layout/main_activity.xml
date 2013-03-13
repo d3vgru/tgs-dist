@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <!-- main fragment "tab group" -->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mainActivityPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        />
+    
+    <!-- text entry -->
+    <LinearLayout
+        android:id="@+id/mainActivityComposer"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/grey"
+        android:visibility="gone"
+        >
+        
+        <!-- text box -->
+        <EditText
+            android:id="@+id/messageTxt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:lines="4"
+            android:minLines="4"
+            android:maxLines="4"
+            android:scrollHorizontally="false"
+            />
+        
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            
+	        <!-- file button -->
+	        <ImageButton
+	            android:id="@+id/fileBtn"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+	            android:src="@drawable/content_new_attachment"
+	            android:contentDescription="@string/fileBtnLabel"
+	            />
+	        
+	        <!-- send button -->
+	        <ImageButton
+	            android:id="@+id/sendBtn"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+	            android:src="@drawable/social_send_now"
+	            android:contentDescription="@string/sendBtnLabel"
+	            />
+        
+        </LinearLayout>
+        
+    </LinearLayout>
+</LinearLayout>

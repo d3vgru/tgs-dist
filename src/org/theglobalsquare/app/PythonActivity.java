@@ -4,7 +4,7 @@ import java.io.File;
 
 import android.os.Bundle;
 
-
+// TODO merge anything useful here into org.theglobalsquare.app.PythonService
 public class PythonActivity extends org.renpy.android.PythonActivity {
 	// main activity for the application
 	

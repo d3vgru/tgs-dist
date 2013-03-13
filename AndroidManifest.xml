@@ -11,7 +11,7 @@
 	       android:name="org.theglobalsquare.app.Facade"
                >
 
-    <activity android:name="org.theglobalsquare.app.PythonActivity"
+    <activity android:name="org.theglobalsquare.app.MainActivity"
               android:label="@string/iconName"
               android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale|uiMode"
               android:launchMode="singleTask"

@@ -6,4 +6,5 @@
     <color name="info_text_color">#C6C6C6</color>
     <color name="button_text_color">#413F3F</color>
     <color name="my_custom_background_color">#282425</color>
+    <color name="grey">#ccc</color>
 </resources>

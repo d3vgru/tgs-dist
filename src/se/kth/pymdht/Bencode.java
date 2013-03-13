@@ -82,7 +82,8 @@ public class Bencode {
         print(rootElement, os);
     }
 
-    private void print(Object object, OutputStream os) throws IOException {
+    @SuppressWarnings("rawtypes")
+	private void print(Object object, OutputStream os) throws IOException {
         if (object instanceof Long) {
             os.write('i');
             os.write(((Long) object).toString().getBytes());
@@ -198,7 +199,8 @@ public class Bencode {
         return list;
     }
 
-    private SortedMap parseDictionary(InputStream is) throws BencodeError, IOException {
+    @SuppressWarnings("rawtypes")
+	private SortedMap parseDictionary(InputStream is) throws BencodeError, IOException {
         SortedMap<ByteBuffer, Object> map = new TreeMap<ByteBuffer, Object>(new DictionaryComparator());
         is.mark(0);
         int readChar = is.read();

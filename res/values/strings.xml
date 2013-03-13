@@ -2,6 +2,7 @@
 <resources>
 <string name="appName">Android TGS</string>
 <string name="iconName">Android TGS</string>
+<string name="short_name">TGS</string>
 
 <string name="private_version">1362854045.91</string>
 
@@ -9,4 +10,22 @@
 <string name="public_version">1362854045.91</string>
 
 <string name="urlScheme">kivy</string>
+
+
+<string name="loading">P2P Engine UP</string>
+    
+    <string name="fileBtnLabel">Attach</string>
+    <string name="sendBtnLabel">Send</string>
+    <string name="searchBtnLabel">Search</string>
+    <string name="createBtnLabel">Create</string>
+    <string name="saveBtnLabel">Save</string>
+    <string name="cancelBtnLabel">Cancel</string>
+    <string name="settingsBtnLabel">Settings</string>
+    <string name="helpBtnLabel">Help</string>
+    <string name="refreshBtnLabel">Refresh</string>
+    <string name="composeBtnLabel">Compose</string>
+    
+    <string name="overviewLabel">My Squares</string>
+    <string name="noSquaresMsg">You haven\'t joined any squares yet.
+        Search for a square to join or create a new one to get started.</string>
 </resources>
