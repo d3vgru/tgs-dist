@@ -3,3 +3,4 @@ assets/private.mp3
 assets/public.mp3
 bin
 gen
+python-src/*.pyo

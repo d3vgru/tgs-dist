@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="appName">Kivy Launcher</string>
-<string name="iconName">Kivy Launcher</string>
+<string name="appName">Android TGS</string>
+<string name="iconName">Android TGS</string>
 
-<string name="private_version">1323531558.3</string>
+<string name="private_version">1363146824.18</string>
 
+
+<string name="public_version">1363146824.18</string>
 
 <string name="urlScheme">kivy</string>
 </resources>

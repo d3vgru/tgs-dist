@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="short_name">TGS</string>
+    <string name="loading">P2P Engine UP</string>
+
+    <string name="fileBtnLabel">Attach</string>
+    <string name="sendBtnLabel">Send</string>
+    <string name="searchBtnLabel">Search</string>
+    <string name="createBtnLabel">Create</string>
+    <string name="saveBtnLabel">Save</string>
+    <string name="cancelBtnLabel">Cancel</string>
+    <string name="settingsBtnLabel">Settings</string>
+    <string name="helpBtnLabel">Help</string>
+    <string name="refreshBtnLabel">Refresh</string>
+    <string name="composeBtnLabel">Compose</string>
+
+    <string name="overviewLabel">My Squares</string>
+    <string name="noSquaresMsg">You haven\'t joined any squares yet.
+            Search for a square to join or create a new one to get started.</string>
+</resources>
