@@ -3,4 +3,5 @@ assets/private.mp3
 assets/public.mp3
 bin
 gen
+private/lib/python27.zip
 python-src/*.pyo
