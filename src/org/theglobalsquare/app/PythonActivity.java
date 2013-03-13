@@ -1,15 +1,26 @@
 package org.theglobalsquare.app;
 
-import java.io.File;
+//import java.io.File;
 
 import android.os.Bundle;
 
-// TODO merge anything useful here into org.theglobalsquare.app.PythonService
-public class PythonActivity extends org.renpy.android.PythonActivity {
+// TODO merge anything useful here into org.theglobalsquare.app.PythonService?
+public class PythonActivity extends MainActivity {
+	boolean ready = false;
+	
 	// main activity for the application
 	
+	public boolean isReady() {
+		return ready;
+	}
+
+	public void setReady(boolean ready) {
+		this.ready = ready;
+	}
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
+		/*
 		String appPath = getApplicationContext().getFilesDir().getAbsolutePath();
 		String sitePkgs = appPath + "/lib/python2.7/site-packages";
 		android.util.Log.e("PythonActivity", "sitePkgs: " + sitePkgs);
@@ -31,7 +42,14 @@ public class PythonActivity extends org.renpy.android.PythonActivity {
 		   android.util.Log.w("PythonActivity", "D: " + files);
 		      }
 		  }
+		  */
 		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
 	}
 }
 

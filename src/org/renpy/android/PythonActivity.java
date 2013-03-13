@@ -32,7 +32,9 @@ import java.io.IOException;
 
 import java.util.zip.GZIPInputStream;
 
-public class PythonActivity extends Activity implements Runnable {
+import org.theglobalsquare.framework.TabbedFragmentActivity;
+
+public class PythonActivity extends TabbedFragmentActivity implements Runnable {
 
     // The audio thread for streaming audio...
     private static AudioThread mAudioThread = null;
@@ -55,7 +57,7 @@ public class PythonActivity extends Activity implements Runnable {
     boolean _isPaused = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Hardware.context = this;
@@ -104,10 +106,13 @@ public class PythonActivity extends Activity implements Runnable {
             mPath = getFilesDir();
         }
 
+        /* ERK - don't do that, we need the title area for the action bar */
         // go to fullscreen mode
+        /*
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                             */
 
         // Start showing an SDLSurfaceView.
         mView = new SDLSurfaceView(

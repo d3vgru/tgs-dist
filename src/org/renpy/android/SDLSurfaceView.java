@@ -24,6 +24,9 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL10;
+
+import org.theglobalsquare.app.R;
+
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
@@ -37,6 +40,7 @@ import android.view.SurfaceView;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 import android.view.KeyEvent;
+import android.widget.LinearLayout;
 import android.net.Uri;
 import android.os.PowerManager;
 
@@ -502,7 +506,21 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
      * not normally called or subclassed by clients of GLSurfaceView.
      */
     public void surfaceCreated(SurfaceHolder holder) {
-		Log.i(TAG, "surfaceCreated() is not handled :|");
+//		Log.i(TAG, "surfaceCreated() is not handled :|");
+    	// FIXME is this a good place to bootstrap the native UI?
+		// make sure the screen is ready
+    	org.theglobalsquare.app.PythonActivity activity = (org.theglobalsquare.app.PythonActivity)mActivity;
+		if(!activity.isReady()) {
+			android.util.Log.i(TAG, "NOT ready");
+			LinearLayout container = (LinearLayout)activity.findViewById(R.id.native_ui);
+			if(container != null) {
+				android.util.Log.i(TAG, "found container, inflating native UI");
+				activity.getLayoutInflater().inflate(R.layout.main_activity, container);
+				android.util.Log.i(TAG, "ready");
+				activity.setReady(true);
+			}
+		}
+
     }
 
     /**

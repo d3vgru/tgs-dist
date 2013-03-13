@@ -15,7 +15,7 @@ import org.theglobalsquare.framework.*;
 import org.theglobalsquare.ui.OverviewListFragment;
 import org.theglobalsquare.ui.SearchFragment;
 
-public class MainActivity extends TabbedFragmentActivity {
+public class MainActivity extends org.renpy.android.PythonActivity {
 	public final static int TAB_SEARCH = 0;
 	public final static int TAB_OVERVIEW = 1;
 	

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="PPSPTheme" parent="@android:style/Theme.Holo">
+    <style name="PPSPTheme" parent="@style/Theme.Sherlock.Light">
         <!-- Any customizations for PPSP app running on 4.0+ devices here -->
         <item name="android:textAppearance">@style/MyDefaultTextAppearance</item>  
         <item name="android:buttonStyle">@style/MyDefaultButtonAppearance</item>
