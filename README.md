@@ -2,7 +2,7 @@ This archive was built starting with:
 
 	./distribute-tgs.sh
 
-using
+using the tgs-android branch of
 
 	https://github.com/d3vgru/python-for-android
 
