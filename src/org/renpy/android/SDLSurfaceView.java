@@ -509,18 +509,16 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 //		Log.i(TAG, "surfaceCreated() is not handled :|");
     	// FIXME is this a good place to bootstrap the native UI?
 		// make sure the screen is ready
-    	org.theglobalsquare.app.PythonActivity activity = (org.theglobalsquare.app.PythonActivity)mActivity;
-		if(!activity.isReady()) {
-			android.util.Log.i(TAG, "NOT ready");
-			LinearLayout container = (LinearLayout)activity.findViewById(R.id.native_ui);
-			if(container != null) {
-				android.util.Log.i(TAG, "found container, inflating native UI");
-				activity.getLayoutInflater().inflate(R.layout.main_activity, container);
-				android.util.Log.i(TAG, "ready");
-				activity.setReady(true);
+		android.util.Log.i(TAG, "NOT ready");
+		LinearLayout container = (LinearLayout)mActivity.findViewById(R.id.native_ui);
+		if(container != null) {
+			android.util.Log.i(TAG, "found container");
+			if(container.getChildCount() == 0) {
+				android.util.Log.i(TAG, "inflating native UI");
+				mActivity.getLayoutInflater().inflate(R.layout.main_activity, container);
 			}
+			android.util.Log.i(TAG, "ready");
 		}
-
     }
 
     /**
