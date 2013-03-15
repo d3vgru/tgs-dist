@@ -9,8 +9,6 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.*;
 
-import org.theglobalsquare.*;
-import org.theglobalsquare.app.*;
 import org.theglobalsquare.framework.*;
 import org.theglobalsquare.ui.OverviewListFragment;
 import org.theglobalsquare.ui.SearchFragment;
@@ -25,13 +23,17 @@ public class MainActivity extends org.renpy.android.PythonActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.main_activity);
+//		setContentView(R.layout.main_activity);
 
         setTitle(getString(R.string.short_name));
-
+        
+        configureTabs();
+	}
+	
+	public void configureTabs() {
 		ActionBar bar = getSupportActionBar();
 		
-		// make sure to setContentView() first
+		// make sure to setContentView() first (in super.onCreate)
 		mViewPager = (ViewPager)findViewById(R.id.mainActivityPager);
 
 		mTabsAdapter = new TabsAdapter(this, mViewPager);
@@ -65,6 +67,7 @@ public class MainActivity extends org.renpy.android.PythonActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// FIXME disable until startup complete
 		switch(item.getItemId()) {
 			case R.id.menu_create:
 				// TODO show new square dialog

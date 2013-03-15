@@ -3,4 +3,5 @@
     
     <item type="id" name="menu_create" />
     
+    <item type="id" name="surface_view" />
 </resources>

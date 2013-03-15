@@ -1,27 +1,15 @@
 package org.renpy.android;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.ActivityNotFoundException;
 import android.content.pm.ActivityInfo;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.PowerManager;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.KeyEvent;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.util.Log;
-import android.util.DisplayMetrics;
-import android.os.Debug;
 
 import java.io.InputStream;
 import java.io.FileInputStream;
@@ -30,8 +18,7 @@ import java.io.FileWriter;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.zip.GZIPInputStream;
-
+import org.theglobalsquare.app.R;
 import org.theglobalsquare.framework.TabbedFragmentActivity;
 
 public class PythonActivity extends TabbedFragmentActivity implements Runnable {
@@ -114,13 +101,22 @@ public class PythonActivity extends TabbedFragmentActivity implements Runnable {
                              WindowManager.LayoutParams.FLAG_FULLSCREEN);
                              */
 
+        setContentView(R.layout.main);
+
         // Start showing an SDLSurfaceView.
         mView = new SDLSurfaceView(
             this,
             mPath.getAbsolutePath());
 
         Hardware.view = mView;
-        setContentView(mView);
+//        setContentView(mView);
+        
+        LinearLayout container = (LinearLayout)findViewById(R.id.surface_container);
+        container.addView(mView);
+        
+        LinearLayout ui = (LinearLayout)findViewById(R.id.native_ui);
+        LayoutInflater inflater = getLayoutInflater();
+        inflater.inflate(R.layout.main_activity, ui);
     }
 
     /**

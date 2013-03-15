@@ -18,7 +18,6 @@
 package org.renpy.android;
 
 import javax.microedition.khronos.egl.EGL10;
-import javax.microedition.khronos.egl.EGL11;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
@@ -53,7 +52,6 @@ import java.nio.FloatBuffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import android.graphics.Color;
-import android.content.res.Resources;
 
 
 public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Runnable {
@@ -509,6 +507,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 //		Log.i(TAG, "surfaceCreated() is not handled :|");
     	// FIXME is this a good place to bootstrap the native UI?
 		// make sure the screen is ready
+    	/*
 		android.util.Log.i(TAG, "NOT ready");
 		LinearLayout container = (LinearLayout)mActivity.findViewById(R.id.native_ui);
 		if(container != null) {
@@ -519,6 +518,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 			}
 			android.util.Log.i(TAG, "ready");
 		}
+		*/
     }
 
     /**
