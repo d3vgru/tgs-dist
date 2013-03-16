@@ -557,6 +557,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
 
     public void run() {
+    	/* ERK - can we skip some of this? */
         mEgl = (EGL10) EGLContext.getEGL();
 
         mEglDisplay = mEgl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY);
@@ -610,13 +611,14 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 				continue;
 			}
 
+			/* trying not to actually make the surface causes a crash */
 			Log.w(TAG, "Create egl surface");
 			if (!createSurface()) {
 				Log.w(TAG, "Unable to create egl surface with this configuration, try the next one.");
 				configToTest++;
 				continue;
 			}
-
+			
 			configFound = true;
 			break;
 		}
@@ -625,8 +627,8 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 			System.exit(0);
 			return;
 		}
-
 		Log.w(TAG, "Done");
+
 		waitForStart();
 
         nativeResize(mWidth, mHeight);
@@ -637,6 +639,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
         nativeSetEnv("PYTHONHOME", mFilesDirectory);
         nativeSetEnv("PYTHONPATH", mArgument + ":" + mFilesDirectory + "/lib");
 
+        /*
 		// XXX Using SetOpenFile make a crash in nativeSetEnv. I don't
 		// understand why, maybe because the method is static or something.
 		// Anyway, if you remove that part of the code, ensure the Laucher
@@ -649,11 +652,14 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 		}
 
 		nativeSetMultitouchUsed();
+		*/
+
+        // actually run the main function on the native side
         nativeInit();
 
 		mPause = PAUSE_STOP_ACK;
 
-		//Log.i(TAG, "End of native init, stop everything (exit0)");
+		Log.i(TAG, "End of native init, stop everything (exit0)");
         System.exit(0);
     }
 
@@ -679,6 +685,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
             } catch (IOException e) { }
         }
 
+        /* ERK - can we skip some of this? */
         mTriangleVertices = ByteBuffer.allocateDirect(mTriangleVerticesData.length
                 * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
         mTriangleVertices.put(mTriangleVerticesData).position(0);
@@ -883,6 +890,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 	private static final int INVALID_POINTER_ID = -1;
 	private int mActivePointerId = INVALID_POINTER_ID;
 
+	/*
     @Override
     public boolean onTouchEvent(final MotionEvent event) {
 
@@ -941,6 +949,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 							event.getY(i)
 					));
 					**/
+	/*
 					SDLSurfaceView.nativeMouse(
 							(int)event.getX(i),
 							(int)event.getY(i),
@@ -976,6 +985,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
             return super.onKeyUp(keyCode, event);
         }
     }
+    */
 
     static void activateInput() {
         mInputActivated = true;

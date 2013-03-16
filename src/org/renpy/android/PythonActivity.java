@@ -279,46 +279,37 @@ public class PythonActivity extends TabbedFragmentActivity implements Runnable {
         return _isPaused;
     }
 
+    /** ERK - let native UI handle it
     @Override
     public boolean onKeyDown(int keyCode, final KeyEvent event) {
-    	/*
         //Log.i("python", "key2 " + mView + " " + mView.mStarted);
         if (mView != null && mView.mStarted && SDLSurfaceView.nativeKey(keyCode, 1, event.getUnicodeChar())) {
             return true;
         } else {
-            ** ERK - let native UI handle it */
             return super.onKeyDown(keyCode, event);
-            /*
         }
-        */
     }
     @Override
     public boolean onKeyUp(int keyCode, final KeyEvent event) {
-    	/*
         //Log.i("python", "key up " + mView + " " + mView.mStarted);
         if (mView != null && mView.mStarted && SDLSurfaceView.nativeKey(keyCode, 0, event.getUnicodeChar())) {
             return true;
         } else {
-    	 	** ERK - let native UI handle it */
+    	 	
             return super.onKeyUp(keyCode, event);
-            /*
         }
-        */
     }
 
     @Override
     public boolean dispatchTouchEvent(final MotionEvent ev) {
-    	/*
         if (mView != null){
             mView.onTouchEvent(ev);
             return true;
         } else {
-        	** ERK - let native UI handle it */
             return super.dispatchTouchEvent(ev);
-            /*
         }
-        */
     }
+    */
 
 	protected void onDestroy() {
 		if (mView != null) {
