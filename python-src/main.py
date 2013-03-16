@@ -5,9 +5,6 @@ from kivy.properties import ObjectProperty, StringProperty
 
 import nulllayout
 
-import os
-import M2Crypto
-
 import time
 import sys
 import os
@@ -28,7 +25,7 @@ from tgscore.dispersy.crypto import (ec_generate_key,
         ec_to_public_bin, ec_to_private_bin)
 
 
-from configobj import ConfigObj
+#from configobj import ConfigObj
 
 #from PySide import QtGui, QtCore
 #from PyQt4 import QtGui, QtCore
