@@ -3,10 +3,10 @@
 <string name="appName">Android TGS</string>
 <string name="iconName">Android TGS</string>
 
-<string name="private_version">1363460361.03</string>
+<string name="private_version">1363473723.72</string>
 
 
-<string name="public_version">1363460361.03</string>
+<string name="public_version">1363473723.72</string>
 
 <string name="urlScheme">kivy</string>
 </resources>

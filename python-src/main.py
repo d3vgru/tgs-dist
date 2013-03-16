@@ -25,7 +25,7 @@ from tgscore.dispersy.crypto import (ec_generate_key,
         ec_to_public_bin, ec_to_private_bin)
 
 
-#from configobj import ConfigObj
+from configobj import ConfigObj
 
 #from PySide import QtGui, QtCore
 #from PyQt4 import QtGui, QtCore
@@ -42,19 +42,17 @@ from tgscore.dispersy.crypto import (ec_generate_key,
 #import signal
 #signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+
 class ControllerApp(App):
     def build(self):
         return nulllayout.NullLayout()
-
-if __name__ == '__main__':
-    ControllerApp().run()
 
 
 # from whirm/tgs-pc tgs_pc/main.py
 CONFIG_FILE_NAME='tgs.conf'
 
 #TODO: Separate the TGS stuff (dispersy threads setup et al, internal callbacks...) from the pure UI code and put it in this class:
-class TGS(QtCore.QObject):
+class TGS:
     ##################################
     #Signals:
     ##################################
@@ -63,7 +61,7 @@ class TGS(QtCore.QObject):
 #    textSearchUpdate = QtCore.pyqtSignal(SearchCache, 'QString')
 
     def __init__(self, workdir):
-        super(TGS, self).__init__()
+#        super(TGS, self).__init__()
         self._workdir = workdir
         self.callback = None
         self._discovery = None
@@ -484,9 +482,11 @@ class ChatCore:
         #Setup TGS core
         self._tgs = TGS(self._workdir)
 
+        """ ERK - re-enable once these have been replaced
         self._tgs.memberSearchUpdate.connect(self.onMemberSearchUpdate)
         self._tgs.squareSearchUpdate.connect(self.onSquareSearchUpdate)
         self._tgs.textSearchUpdate.connect(self.onTextSearchUpdate)
+        """
 
         #Setup QT main window
         #self.app = QtGui.QApplication(sys.argv)
@@ -537,6 +537,7 @@ class ChatCore:
 	# FIXME actually, let kivy do the starting
         #Start QT's event loop
         #self.app.exec_()
+        ControllerApp().run()
 
         #Destroy dispersy threads before exiting
         self._tgs.stopThreads()
@@ -591,3 +592,10 @@ class ChatCore:
         alias = self._config['Member']['Alias']
         thumbnail = '' #str(self._config['Member']['Thumbnail']) #TODO: Setup this correctly when swift gets integrated
         self._tgs.setMemberInfo(community, alias, thumbnail)
+
+if __name__ == '__main__':
+    exit_exception = None
+    if exit_exception:
+        raise exit_exception
+    chat = ChatCore()
+    chat.run()
