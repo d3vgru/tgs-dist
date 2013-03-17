@@ -5,10 +5,6 @@ import org.theglobalsquare.framework.TGSEvent;
 public class TGSUserEvent extends TGSEvent<TGSUser> {
 	// verbs:
 	// name - the user changed name
-	
-	public TGSUserEvent() {
-		type = "user";
-	}
 
 	private TGSUser subject;
 
@@ -21,5 +17,8 @@ public class TGSUserEvent extends TGSEvent<TGSUser> {
 	public void setSubject(TGSUser subject) {
 		this.subject = subject;
 	}
-
+	
+	public TGSUserEvent() {
+		type = "user";
+	}
 }

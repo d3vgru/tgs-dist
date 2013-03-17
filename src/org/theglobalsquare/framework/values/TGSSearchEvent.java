@@ -24,6 +24,9 @@ public abstract class TGSSearchEvent<T> extends TGSEvent<TGSObject> {
 			subject = (TGSCommunity)subject;
 		}
 		
+		public ForCommunity() {
+			type += ".community";
+		}
 	}
 	
 	class ForMessage extends TGSSearchEvent<TGSMessage> {
@@ -40,6 +43,9 @@ public abstract class TGSSearchEvent<T> extends TGSEvent<TGSObject> {
 			subject = (TGSMessage)subject;
 		}
 		
+		public ForMessage() {
+			type += ".message";
+		}
 	}
 	
 	class ForUser extends TGSSearchEvent<TGSUser> {
@@ -56,5 +62,12 @@ public abstract class TGSSearchEvent<T> extends TGSEvent<TGSObject> {
 			subject = (TGSUser)subject;
 		}
 		
+		public ForUser() {
+			type += ".user";
+		}
+	}
+	
+	public TGSSearchEvent() {
+		type = "search";
 	}
 }

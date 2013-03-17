@@ -5,10 +5,6 @@ import org.theglobalsquare.framework.TGSEvent;
 public class TGSConfigEvent extends TGSEvent<TGSConfig> {
 	// verbs:
 	// update - set a config parameter 
-	
-	public TGSConfigEvent() {
-		type = "config";
-	}
 
 	private TGSConfig subject;
 
@@ -42,5 +38,9 @@ public class TGSConfigEvent extends TGSEvent<TGSConfig> {
 
 	public void setParamValue(String paramValue) {
 		this.paramValue = paramValue;
+	}
+	
+	public TGSConfigEvent() {
+		type = "config";
 	}
 }

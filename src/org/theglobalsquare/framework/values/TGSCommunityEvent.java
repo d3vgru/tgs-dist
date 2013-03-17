@@ -20,4 +20,7 @@ public class TGSCommunityEvent extends TGSEvent<TGSCommunity> {
 		this.subject = subject;
 	}
 
+	public TGSCommunityEvent() {
+		type = "community";
+	}
 }

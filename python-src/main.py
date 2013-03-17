@@ -35,7 +35,7 @@ from configobj import ConfigObj
 
 
 # pyjnius bindings to java framework
-TGSEventProxy = autoclass('org.theglobalsquare.framework.values.TGSEventProxy');
+TGSEventProxy = autoclass('org.theglobalsquare.framework.TGSEventProxy');
 TGSCommunity = autoclass('org.theglobalsquare.framework.values.TGSCommunity');
 TGSCommunityEvent = autoclass('org.theglobalsquare.framework.values.TGSCommunityEvent');
 TGSConfig = autoclass('org.theglobalsquare.framework.values.TGSConfig');
@@ -46,7 +46,7 @@ TGSUser = autoclass('org.theglobalsquare.framework.values.TGSUser');
 TGSUserEvent = autoclass('org.theglobalsquare.framework.values.TGSUserEvent');
 TGSSearchEventForCommunity = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForCommunity');
 TGSSearchEventForMessage = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForMessage');
-TGSSearchForUserEvent = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForUser');
+TGSSearchEventForUser = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForUser');
 
 class ControllerApp(App):
     def build(self):
@@ -59,7 +59,7 @@ CONFIG_FILE_NAME='tgs.conf'
 
 class AndroidFacade:
     @staticmethod
-    def nextEvent:
+    def nextEvent():
     	return TGSEventProxy.nextEvent
     @staticmethod
     def sendEvent(event):
@@ -82,6 +82,7 @@ class TGS:
 #    squareSearchUpdate = QtCore.pyqtSignal(SearchCache, 'QString')
 #    textSearchUpdate = QtCore.pyqtSignal(SearchCache, 'QString')
 # pass the update value
+    Logger.info("TGS: setting up search signals")
     self.memberSearchUpdateEvent = TGSSearchEventForUser()
     self.memberSearchUpdate = TGSSignal(memberSearchUpdateEvent)
     self.squareSearchUpdateEvent = TGSSearchEventForCommunity()

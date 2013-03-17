@@ -23,8 +23,8 @@ public class PythonActivity extends MainActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		String appPath = getApplicationContext().getFilesDir().getAbsolutePath();
-		String tgsPath = appPath + "/tgs";
-		android.util.Log.e("PythonActivity", "tgsPath: " + tgsPath);
+		String tgsPath = appPath;
+		android.util.Log.e("PythonActivity", "filesPath: " + tgsPath);
 		 String files;
 		  File folder = new File(tgsPath);
 		  File[] listOfFiles = folder.listFiles(); 
