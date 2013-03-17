@@ -1,6 +1,7 @@
 import kivy
-kivy.require('1.0.9')
+kivy.require('1.5.0')
 from kivy.app import App
+from kivy.logger import Logger
 from kivy.properties import ObjectProperty, StringProperty
 
 import nulllayout
@@ -23,7 +24,6 @@ from tgscore.dispersy.member import Member
 from tgscore.dispersy.dprint import dprint
 from tgscore.dispersy.crypto import (ec_generate_key,
         ec_to_public_bin, ec_to_private_bin)
-
 
 from configobj import ConfigObj
 
@@ -95,6 +95,7 @@ class TGS:
     #Public methods:
     ##################################
     def setupThreads(self):
+    	Logger.info('TGS: setting up threads');
         # start threads
         callback = Callback()
         callback.start(name="Dispersy")
@@ -107,6 +108,7 @@ class TGS:
         self.callback = callback
 
     def stopThreads(self):
+    	Logger.info('TGS: tearing down threads');
         self.callback.stop()
 
         if self.callback.exception:
@@ -114,23 +116,27 @@ class TGS:
             exit_exception = self.callback.exception
 
     def createNewSquare(self, square_info):
+    	Logger.info('TGS: creating new square');
         self.callback.register(self._dispersyCreateCommunity, square_info)
 
     def sendText(self, community, message, media_hash=''):
+    	Logger.info('TGS: sending text');
         self.callback.register(community.post_text, (message, media_hash))
 
     def setMemberInfo(self, community, alias, thumbnail_hash=''):
+    	Logger.info('TGS: setting member info');
         self.callback.register(community.set_my_member_info, (alias,thumbnail_hash))
 
     ##################################
     #Private methods:
     ##################################
     def _dispersy(self, callback):
-
+    	Logger.info('TGS: starting dispersy');
         # start Dispersy
         dispersy = Dispersy.get_instance(callback, self._workdir)
         dispersy.endpoint = StandaloneEndpoint(dispersy, 12345)
         dispersy.endpoint.start()
+    	Logger.info('TGS: dispersy endpoint started');
 
         # load/join discovery community
 	# FIXME
@@ -152,10 +158,12 @@ class TGS:
         dispersy.define_auto_load(PreviewCommunity, (self._discovery, False))
         dispersy.define_auto_load(SquareCommunity, (self._discovery,))
 
+    	Logger.info('TGS: loading squares');
         # load squares
         for master in SquareCommunity.get_master_members():
             yield 0.1
             dispersy.get_community(master.mid)
+    	Logger.info('TGS: dispersy startup complete');
 
     def _dispersy_onSearchResult(self, result):
         print "OnSearchResult", result
@@ -479,6 +487,7 @@ class ChatCore:
         #Read config file
         self._getConfig()
 
+    	Logger.info('ChatCore: setting up TGS');
         #Setup TGS core
         self._tgs = TGS(self._workdir)
 
@@ -529,15 +538,19 @@ class ChatCore:
         #                                        self.onNewPreviewCommunityCreated)
         """
 
+    	Logger.info('ChatCore: START');
+
         #Setup dispersy threads
         self._tgs.setupThreads()
 
         #Show the main window
         #self.mainwin.show()
-	# FIXME actually, let kivy do the starting
+        # actually, let kivy do the starting
         #Start QT's event loop
         #self.app.exec_()
+    	Logger.info('ChatCore: run kivy controller');
         ControllerApp().run()
+    	Logger.info('ChatCore: STOP');
 
         #Destroy dispersy threads before exiting
         self._tgs.stopThreads()
@@ -549,7 +562,7 @@ class ChatCore:
         # FIXME hardcode config to private file
 	# TODO eventually store actual config on android side and use this for downloaded files
         """
-	current_os = sys.platform
+        current_os = sys.platform
         if len(sys.argv) > 1 and os.path.exists(sys.argv[1]):
             config_path = unicode(sys.argv[1])
         elif current_os in ('win32','cygwin'):
@@ -562,7 +575,7 @@ class ChatCore:
             print "I don't know where to store my config in this operating system and didn't receive an existing dir as first argument. (%s)\nExiting." % current_os
             sys.exit(10)
         """
-	config_path = '/data/data/org.theglobalsquare.app/files/tgs';
+        config_path = '/data/data/org.theglobalsquare.app/files/tgs';
 
         #Create app data dir if it doesn't exist
         if not os.path.exists(config_path):
