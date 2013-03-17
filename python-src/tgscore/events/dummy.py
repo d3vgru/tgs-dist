@@ -1,3 +1,4 @@
+from kivy.logger import Logger
 
 class DummyEventBroker(object):
     """
@@ -8,7 +9,8 @@ class DummyEventBroker(object):
             self._event_name=event
 
         def __call__(self, *argv, **kwargs):
-            print "Event: %s fired with %s %s" % (self._event_name, argv, kwargs)
+            Logger.info('DummyEventBroker: event fired');
+	    print "Event: %s fired with %s %s" % (self._event_name, argv, kwargs)
 
     def __getattr__(self, attr):
         return self.DummyPrinter(attr)

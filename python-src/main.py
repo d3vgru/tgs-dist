@@ -10,12 +10,12 @@ import time
 import sys
 import os
 
+from jnius import autoclass
+from jnius import cast
+
 from tgscore.discovery.community import DiscoveryCommunity, SearchCache
 from tgscore.square.community import PreviewCommunity, SquareCommunity
 from tgscore import events
-
-# replace eventproxy with something ... kivy? or another python module...
-#import eventproxy
 
 from tgscore.dispersy.endpoint import StandaloneEndpoint
 from tgscore.dispersy.callback import Callback
@@ -27,21 +27,26 @@ from tgscore.dispersy.crypto import (ec_generate_key,
 
 from configobj import ConfigObj
 
-#from PySide import QtGui, QtCore
-#from PyQt4 import QtGui, QtCore
 
-#Local
-#from widgets import (ChatMessageListItem, MainWin, SquareOverviewListItem,
-#        SquareEditDialog, SquareSearchDialog, MessageSearchDialog, MemberSearchDialog)
-
+# FIXME use new event model
 #Set up our QT event broker
 #events.setEventBrokerFactory(eventproxy.createEventBroker)
 #global_events = eventproxy.createEventBroker(None)
 
-#Die with ^C
-#import signal
-#signal.signal(signal.SIGINT, signal.SIG_DFL)
 
+# pyjnius bindings to java framework
+TGSEventProxy = autoclass('org.theglobalsquare.framework.values.TGSEventProxy');
+TGSCommunity = autoclass('org.theglobalsquare.framework.values.TGSCommunity');
+TGSCommunityEvent = autoclass('org.theglobalsquare.framework.values.TGSCommunityEvent');
+TGSConfig = autoclass('org.theglobalsquare.framework.values.TGSConfig');
+TGSConfigEvent = autoclass('org.theglobalsquare.framework.values.TGSConfigEvent');
+TGSMessage = autoclass('org.theglobalsquare.framework.values.TGSMessage');
+TGSMessageEvent = autoclass('org.theglobalsquare.framework.values.TGSMessageEvent');
+TGSUser = autoclass('org.theglobalsquare.framework.values.TGSUser');
+TGSUserEvent = autoclass('org.theglobalsquare.framework.values.TGSUserEvent');
+TGSSearchEventForCommunity = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForCommunity');
+TGSSearchEventForMessage = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForMessage');
+TGSSearchForUserEvent = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForUser');
 
 class ControllerApp(App):
     def build(self):
@@ -51,6 +56,23 @@ class ControllerApp(App):
 # from whirm/tgs-pc tgs_pc/main.py
 CONFIG_FILE_NAME='tgs.conf'
 
+
+class AndroidFacade:
+    @staticmethod
+    def nextEvent:
+    	return TGSEventProxy.nextEvent
+    @staticmethod
+    def sendEvent(event):
+        return TGSEventProxy.sendEvent(event)
+
+
+# for simple notifications of a recurring event
+class TGSSignal:
+    def __init__(self, eventProto):
+        self._eventProto = eventProto
+    def emit(self):
+        AndroidFacade.sendEvent(eventProto)
+
 #TODO: Separate the TGS stuff (dispersy threads setup et al, internal callbacks...) from the pure UI code and put it in this class:
 class TGS:
     ##################################
@@ -59,9 +81,15 @@ class TGS:
 #    memberSearchUpdate = QtCore.pyqtSignal(SearchCache, 'QString')
 #    squareSearchUpdate = QtCore.pyqtSignal(SearchCache, 'QString')
 #    textSearchUpdate = QtCore.pyqtSignal(SearchCache, 'QString')
+# pass the update value
+    self.memberSearchUpdateEvent = TGSSearchEventForUser()
+    self.memberSearchUpdate = TGSSignal(memberSearchUpdateEvent)
+    self.squareSearchUpdateEvent = TGSSearchEventForCommunity()
+    self.squareSearchUpdate = TGSSignal(squareSearchUpdateEvent)
+    self.textSquareSearchUpdateEvent = TGSSearchEventForMessage()
+    self.textSquareSearchUpdate = TGSSignal(textSearchUpdateEvent)
 
     def __init__(self, workdir):
-#        super(TGS, self).__init__()
         self._workdir = workdir
         self.callback = None
         self._discovery = None
@@ -73,13 +101,11 @@ class TGS:
     #TODO: Add an arg to add the result list widget/model to support multiple search windows.
     def startNewMemberSearch(self, search_terms):
         print "Searching members for:", search_terms
-
-	# FIXME instead pf pyqt signals, use..
-#        self._discovery.simple_member_search(search_terms, self.memberSearchUpdate.emit)
+        self._discovery.simple_member_search(search_terms, self.memberSearchUpdate.emit)
 
     def startNewSquareSearch(self, search_terms):
         print "Searching squares for:", search_terms
-#        self._discovery.simple_square_search(search_terms, self.squareSearchUpdate.emit)
+        self._discovery.simple_square_search(search_terms, self.squareSearchUpdate.emit)
 
     def startNewTextSearch(self, search_terms):
         print "Searching text messages for:", search_terms
@@ -236,7 +262,7 @@ class ChatCore:
     ##################################
     #Slots:
     ##################################
-
+    """ some of these need to propagate events to UI, but Android layer handles all the business
     #TODO: Refactor the 3 search functions to 3 small ones and a generic one as they are basically the same.
     def onMemberSearchUpdate(self, cache, event):
         #TODO:
@@ -479,7 +505,7 @@ class ChatCore:
         else:
             self._message_attachment = None
             self.mainwin.attach_btn.setToolTip('')
-
+    """
     ##################################
     #Public Methods
     ##################################
@@ -545,10 +571,10 @@ class ChatCore:
 
         #Show the main window
         #self.mainwin.show()
-        # actually, let kivy do the starting
         #Start QT's event loop
         #self.app.exec_()
     	Logger.info('ChatCore: run kivy controller');
+        # actually, let kivy do the starting
         ControllerApp().run()
     	Logger.info('ChatCore: STOP');
 
@@ -560,7 +586,7 @@ class ChatCore:
     ##################################
     def _getConfig(self):
         # FIXME hardcode config to private file
-	# TODO eventually store actual config on android side and use this for downloaded files
+	# TODO eventually store actual config on android side and use this for downloaded files only
         """
         current_os = sys.platform
         if len(sys.argv) > 1 and os.path.exists(sys.argv[1]):
@@ -579,13 +605,16 @@ class ChatCore:
 
         #Create app data dir if it doesn't exist
         if not os.path.exists(config_path):
+            Logger.info('ChatCore: making config dir');
             os.makedirs(config_path)
 
         config_file_path = os.path.join(config_path, CONFIG_FILE_NAME)
 
+        Logger.info('ChatCore: ConfigObjing it up');
         config = ConfigObj(config_file_path, encoding='utf-8')
 
         if not os.path.exists(config_file_path):
+            Logger.info('ChatCore: using defaults');
             #Set default values
             config['Member'] = {
                 'Alias': u'Anon',

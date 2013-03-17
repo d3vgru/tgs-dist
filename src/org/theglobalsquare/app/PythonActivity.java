@@ -2,6 +2,8 @@ package org.theglobalsquare.app;
 
 //import java.io.File;
 
+import java.io.File;
+
 import android.os.Bundle;
 
 // TODO merge anything useful here into org.theglobalsquare.app.PythonService?
@@ -20,12 +22,11 @@ public class PythonActivity extends MainActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		/*
 		String appPath = getApplicationContext().getFilesDir().getAbsolutePath();
-		String sitePkgs = appPath + "/lib/python2.7/site-packages";
-		android.util.Log.e("PythonActivity", "sitePkgs: " + sitePkgs);
+		String tgsPath = appPath + "/tgs";
+		android.util.Log.e("PythonActivity", "tgsPath: " + tgsPath);
 		 String files;
-		  File folder = new File(sitePkgs);
+		  File folder = new File(tgsPath);
 		  File[] listOfFiles = folder.listFiles(); 
 		 
 		  for (int i = 0; i < listOfFiles.length; i++) 
@@ -42,7 +43,6 @@ public class PythonActivity extends MainActivity {
 		   android.util.Log.w("PythonActivity", "D: " + files);
 		      }
 		  }
-		  */
 		super.onCreate(savedInstanceState);
 	}
 
