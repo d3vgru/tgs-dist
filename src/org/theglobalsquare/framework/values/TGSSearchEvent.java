@@ -3,14 +3,14 @@ package org.theglobalsquare.framework.values;
 import org.theglobalsquare.framework.TGSEvent;
 import org.theglobalsquare.framework.TGSObject;
 
-public abstract class TGSSearchEvent<T> extends TGSEvent<TGSObject> {
+public abstract class TGSSearchEvent extends TGSEvent<TGSObject> {
 	// verbs:
 	// start - request a search to start [java]
 	// cancel - cancel search [java]
 	// update - report result(s) [python]
 	
 	// various types
-	class ForCommunity extends TGSSearchEvent<TGSCommunity> {
+	class ForCommunity extends TGSSearchEvent {
 		private TGSCommunity subject;
 		
 		@Override
@@ -29,7 +29,7 @@ public abstract class TGSSearchEvent<T> extends TGSEvent<TGSObject> {
 		}
 	}
 	
-	class ForMessage extends TGSSearchEvent<TGSMessage> {
+	class ForMessage extends TGSSearchEvent {
 		private TGSMessage subject;
 		
 		@Override
@@ -48,7 +48,7 @@ public abstract class TGSSearchEvent<T> extends TGSEvent<TGSObject> {
 		}
 	}
 	
-	class ForUser extends TGSSearchEvent<TGSUser> {
+	class ForUser extends TGSSearchEvent {
 		private TGSUser subject;
 		
 		@Override

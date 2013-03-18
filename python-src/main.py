@@ -44,9 +44,9 @@ TGSMessage = autoclass('org.theglobalsquare.framework.values.TGSMessage');
 TGSMessageEvent = autoclass('org.theglobalsquare.framework.values.TGSMessageEvent');
 TGSUser = autoclass('org.theglobalsquare.framework.values.TGSUser');
 TGSUserEvent = autoclass('org.theglobalsquare.framework.values.TGSUserEvent');
-TGSSearchEventForCommunity = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForCommunity');
-TGSSearchEventForMessage = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForMessage');
-TGSSearchEventForUser = autoclass('org.theglobalsquare.framework.values.TGSSearchEvent$ForUser');
+TGSCommunitySearchEvent = autoclass('org.theglobalsquare.framework.values.TGSCommunitySearchEvent');
+TGSMessageSearchEvent = autoclass('org.theglobalsquare.framework.values.TGSMessageSearchEvent');
+TGSUserSearchEvent = autoclass('org.theglobalsquare.framework.values.TGSUserSearchEvent');
 
 class ControllerApp(App):
     def build(self):
@@ -82,24 +82,24 @@ class TGS:
 #    squareSearchUpdate = QtCore.pyqtSignal(SearchCache, 'QString')
 #    textSearchUpdate = QtCore.pyqtSignal(SearchCache, 'QString')
 # pass the update value
-    Logger.info("TGS: setting up search signals")
-    self.memberSearchUpdateEvent = TGSSearchEventForUser()
-    self.memberSearchUpdate = TGSSignal(memberSearchUpdateEvent)
-    self.squareSearchUpdateEvent = TGSSearchEventForCommunity()
-    self.squareSearchUpdate = TGSSignal(squareSearchUpdateEvent)
-    self.textSquareSearchUpdateEvent = TGSSearchEventForMessage()
-    self.textSquareSearchUpdate = TGSSignal(textSearchUpdateEvent)
-
     def __init__(self, workdir):
         self._workdir = workdir
         self.callback = None
         self._discovery = None
         self._my_member = None
+        Logger.info("TGS: setting up search signals")
+        self.memberSearchUpdateEvent = TGSUserSearchEvent()
+        self.memberSearchUpdate = TGSSignal(self.memberSearchUpdateEvent)
+        self.squareSearchUpdateEvent = TGSCommunitySearchEvent()
+        self.squareSearchUpdate = TGSSignal(self.squareSearchUpdateEvent)
+        self.textSearchUpdateEvent = TGSMessageSearchEvent()
+        self.textSearchUpdate = TGSSignal(self.textSearchUpdateEvent)
 
     ##################################
     #Slots:
     ##################################
     #TODO: Add an arg to add the result list widget/model to support multiple search windows.
+    # FIXME pass the SearchCache with the event
     def startNewMemberSearch(self, search_terms):
         print "Searching members for:", search_terms
         self._discovery.simple_member_search(search_terms, self.memberSearchUpdate.emit)
@@ -110,7 +110,7 @@ class TGS:
 
     def startNewTextSearch(self, search_terms):
         print "Searching text messages for:", search_terms
-#        self._discovery.simple_text_search(search_terms, self.textSearchUpdate.emit)
+        self._discovery.simple_text_search(search_terms, self.textSearchUpdate.emit)
 
     def joinSquare(self, square):
         self.callback.register(square.join_square)

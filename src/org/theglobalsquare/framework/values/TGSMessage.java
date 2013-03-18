@@ -35,4 +35,8 @@ public class TGSMessage extends TGSObject {
 	public void setCommunity(TGSCommunity community) {
 		this.community = community;
 	}
+	
+	public TGSMessage() {
+		
+	}
 }

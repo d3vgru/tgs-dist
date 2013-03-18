@@ -31,5 +31,9 @@ public class TGSConfig extends TGSObject {
 
 	public void setProxyPort(Integer proxyPort) {
 		this.proxyPort = proxyPort;
-	}	
+	}
+	
+	public TGSConfig() {
+		
+	}
 }
