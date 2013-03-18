@@ -504,21 +504,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
      * not normally called or subclassed by clients of GLSurfaceView.
      */
     public void surfaceCreated(SurfaceHolder holder) {
-//		Log.i(TAG, "surfaceCreated() is not handled :|");
-    	// FIXME is this a good place to bootstrap the native UI?
-		// make sure the screen is ready
-    	/*
-		android.util.Log.i(TAG, "NOT ready");
-		LinearLayout container = (LinearLayout)mActivity.findViewById(R.id.native_ui);
-		if(container != null) {
-			android.util.Log.i(TAG, "found container");
-			if(container.getChildCount() == 0) {
-				android.util.Log.i(TAG, "inflating native UI");
-				mActivity.getLayoutInflater().inflate(R.layout.main_activity, container);
-			}
-			android.util.Log.i(TAG, "ready");
-		}
-		*/
+		Log.i(TAG, "surfaceCreated() is not handled :|");
     }
 
     /**
@@ -611,7 +597,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 				continue;
 			}
 
-			/* trying not to actually make the surface causes a crash */
+			/* ERK - trying not to actually make the surface causes a crash */
 			Log.w(TAG, "Create egl surface");
 			if (!createSurface()) {
 				Log.w(TAG, "Unable to create egl surface with this configuration, try the next one.");
@@ -631,8 +617,12 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
 
 		waitForStart();
 
+		// let python know the screen size in case it matters
         nativeResize(mWidth, mHeight);
+		
+		// if we don't call this, we get an "unable to get jni env" msg from pyjnius 
         nativeInitJavaCallbacks();
+        
         nativeSetEnv("ANDROID_PRIVATE", mFilesDirectory);
         nativeSetEnv("ANDROID_ARGUMENT", mArgument);
         nativeSetEnv("PYTHONOPTIMIZE", "2");
@@ -686,6 +676,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
         }
 
         /* ERK - can we skip some of this? */
+        /*
         mTriangleVertices = ByteBuffer.allocateDirect(mTriangleVerticesData.length
                 * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
         mTriangleVertices.put(mTriangleVerticesData).position(0);
@@ -791,6 +782,7 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
         checkGlError("glDrawArrays");
 		mEgl.eglSwapBuffers(mEglDisplay, mEglSurface);
+		*/
 
         // Wait to be notified it's okay to start Python.
         synchronized (this) {
@@ -811,10 +803,12 @@ public class SDLSurfaceView extends SurfaceView implements SurfaceHolder.Callbac
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
 
+        /*
         // Delete texture.
         GLES20.glDeleteTextures(1, textures, 0);
 		if (bitmap != null)
 			bitmap.recycle();
+		*/
 
 		// Delete program
 		GLES20.glDeleteProgram(mProgram);

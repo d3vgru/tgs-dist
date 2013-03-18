@@ -23,10 +23,10 @@ public class PythonActivity extends MainActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		String appPath = getApplicationContext().getFilesDir().getAbsolutePath();
-		String tgsPath = appPath + "/tgs";
-		android.util.Log.w("PythonActivity", "tgsPath: " + tgsPath);
+		String sqlPath = appPath + "/tgs/sqlite";
+		android.util.Log.w("PythonActivity", "sqlite Path: " + sqlPath);
 		String files;
-		File folder = new File(tgsPath);
+		File folder = new File(sqlPath);
 		if(folder != null) {
 			File[] listOfFiles = folder.listFiles(); 
 			if(listOfFiles != null) {
