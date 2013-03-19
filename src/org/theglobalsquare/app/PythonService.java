@@ -44,7 +44,7 @@ import java.nio.ByteOrder;
 import android.graphics.Color;
 import android.content.res.Resources;
 
-
+// mostly from org.renpy.android.PythonActivity
 public class PythonService extends Service implements Runnable {
 	private static String TAG = "SDLSurface";
     private final String mVertexShader =

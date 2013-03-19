@@ -29,12 +29,14 @@ from configobj import ConfigObj
 
 
 # FIXME use new event model
+# dispersy depends on this, so... wtf is it?
 #Set up our QT event broker
 #events.setEventBrokerFactory(eventproxy.createEventBroker)
 #global_events = eventproxy.createEventBroker(None)
 
 
 # pyjnius bindings to java framework
+TGSMainActivity = autoclass('org.theglobalsquare.app.MainActivity');
 TGSEventProxy = autoclass('org.theglobalsquare.framework.TGSEventProxy');
 TGSCommunity = autoclass('org.theglobalsquare.framework.values.TGSCommunity');
 TGSCommunityEvent = autoclass('org.theglobalsquare.framework.values.TGSCommunityEvent');
@@ -42,11 +44,13 @@ TGSConfig = autoclass('org.theglobalsquare.framework.values.TGSConfig');
 TGSConfigEvent = autoclass('org.theglobalsquare.framework.values.TGSConfigEvent');
 TGSMessage = autoclass('org.theglobalsquare.framework.values.TGSMessage');
 TGSMessageEvent = autoclass('org.theglobalsquare.framework.values.TGSMessageEvent');
+TGSSystemEvent = autoclass('org.theglobalsquare.framework.values.TGSSystemEvent');
 TGSUser = autoclass('org.theglobalsquare.framework.values.TGSUser');
 TGSUserEvent = autoclass('org.theglobalsquare.framework.values.TGSUserEvent');
 TGSCommunitySearchEvent = autoclass('org.theglobalsquare.framework.values.TGSCommunitySearchEvent');
 TGSMessageSearchEvent = autoclass('org.theglobalsquare.framework.values.TGSMessageSearchEvent');
 TGSUserSearchEvent = autoclass('org.theglobalsquare.framework.values.TGSUserSearchEvent');
+
 
 class ControllerApp(App):
     def build(self):
@@ -64,6 +68,9 @@ class AndroidFacade:
     @staticmethod
     def sendEvent(event):
         return TGSEventProxy.sendEvent(event)
+    @staticmethod
+    def monitor(msg):
+        TGSMainActivity.log(msg)
 
 
 # for simple notifications of a recurring event
@@ -72,6 +79,7 @@ class TGSSignal:
         self._eventProto = eventProto
     def emit(self):
         AndroidFacade.sendEvent(eventProto)
+
 
 #TODO: Separate the TGS stuff (dispersy threads setup et al, internal callbacks...) from the pure UI code and put it in this class:
 class TGS:
@@ -83,6 +91,7 @@ class TGS:
 #    textSearchUpdate = QtCore.pyqtSignal(SearchCache, 'QString')
 # pass the update value
     def __init__(self, workdir):
+        AndroidFacade.monitor('TGS: init')
         self._workdir = workdir
         self.callback = None
         self._discovery = None
@@ -158,7 +167,8 @@ class TGS:
     #Private methods:
     ##################################
     def _dispersy(self, callback):
-    	Logger.info('TGS: starting dispersy');
+        AndroidFacade.log('TGS: starting dispersy')
+    	Logger.info('TGS: starting dispersy')
         # start Dispersy
         dispersy = Dispersy.get_instance(callback, self._workdir)
         dispersy.endpoint = StandaloneEndpoint(dispersy, 12345)
@@ -185,12 +195,13 @@ class TGS:
         dispersy.define_auto_load(PreviewCommunity, (self._discovery, False))
         dispersy.define_auto_load(SquareCommunity, (self._discovery,))
 
-    	Logger.info('TGS: loading squares');
+    	Logger.info('TGS: loading squares')
         # load squares
         for master in SquareCommunity.get_master_members():
             yield 0.1
             dispersy.get_community(master.mid)
-    	Logger.info('TGS: dispersy startup complete');
+    	AndroidFacade.log('TGS: dispersy startup complete')
+    	Logger.info('TGS: dispersy startup complete')
 
     def _dispersy_onSearchResult(self, result):
         print "OnSearchResult", result

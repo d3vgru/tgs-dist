@@ -17,4 +17,11 @@
     <string name="overviewLabel">My Squares</string>
     <string name="noSquaresMsg">You haven\'t joined any squares yet.
             Search for a square to join or create a new one to get started.</string>
+            
+    <string name="monitorLabel">Monitor</string>
+            
+	<string name="hintMainSearch">Keyword</string>
+    <string name="btnSearchText">Search For Text</string>
+    <string name="btnSearchUser">Search For User</string>
+    <string name="btnSearchCommunity">Search For Community</string>
 </resources>

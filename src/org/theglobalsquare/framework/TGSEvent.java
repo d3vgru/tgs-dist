@@ -32,6 +32,6 @@ public abstract class TGSEvent<T> {
 	
 	
 	public boolean send() {
-		return TGSEventProxy.getInstance().sendEvent(this, true);
+		return TGSEventProxy.sendEvent(this, true);
 	}
 }

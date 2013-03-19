@@ -3,6 +3,10 @@ package org.theglobalsquare.framework.values;
 import org.theglobalsquare.framework.TGSObject;
 
 public class TGSMessage extends TGSObject {
+	// verbs
+	public static final String SEND = "send";
+	public static final String RECEIVED = "received";
+	
 	// who sent it?
 	private TGSUser from;
 	
@@ -36,7 +40,21 @@ public class TGSMessage extends TGSObject {
 		this.community = community;
 	}
 	
+	// who or what is the intended recipient?
+	private TGSObject destination;
+	
+
+	public TGSObject getDestination() {
+		return destination;
+	}
+
+	public void setDestination(TGSObject destination) {
+		assert destination instanceof TGSUser || destination instanceof TGSCommunity;
+		this.destination = destination;
+	}
+
 	public TGSMessage() {
 		
 	}
+	
 }

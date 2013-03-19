@@ -2,8 +2,6 @@ package org.theglobalsquare.app;
 
 //import java.io.File;
 
-import java.io.File;
-
 import android.os.Bundle;
 
 // TODO merge anything useful here into org.theglobalsquare.app.PythonService?
@@ -22,6 +20,7 @@ public class PythonActivity extends MainActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		/*
 		String appPath = getApplicationContext().getFilesDir().getAbsolutePath();
 		String sqlPath = appPath + "/tgs/sqlite";
 		android.util.Log.w("PythonActivity", "sqlite Path: " + sqlPath);
@@ -46,6 +45,7 @@ public class PythonActivity extends MainActivity {
 				}
 			}
 		}
+		*/
 		super.onCreate(savedInstanceState);
 	}
 
